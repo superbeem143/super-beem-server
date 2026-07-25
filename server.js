@@ -24,7 +24,7 @@ app.post("/chat", async (req, res) => {
     const { message } = req.body;
 
     const response = await client.chat.completions.create({
-      model: "google/gemma-3-12b-it:free",
+      model: "google/gemma-3-12b-it",
       messages: [
         {
           role: "system",
