@@ -1,19 +1,45 @@
-const http = require("http");
+const express = require("express");
+const cors = require("cors");
+const OpenAI = require("openai");
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200, {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*"
-  });
+const app = express();
 
-  res.end(JSON.stringify({
+app.use(cors());
+app.use(express.json());
+
+const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+app.get("/", (req, res) => {
+  res.json({
     status: "online",
     message: "SUPER BEEM AI Server Running"
-  }));
+  });
+});
+
+app.post("/chat", async (req, res) => {
+  try {
+    const { message } = req.body;
+
+    const response = await client.responses.create({
+      model: "gpt-5-nano",
+      input: message
+    });
+
+    res.json({
+      reply: response.output_text
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "AI request failed"
+    });
+  }
 });
 
 const PORT = process.env.PORT || 3000;
 
-server.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
