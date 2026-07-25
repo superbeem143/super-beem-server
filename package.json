@@ -1,0 +1,9 @@
+{
+  "name": "super-beem-server",
+  "version": "1.0.0",
+  "description": "SUPER BEEM AI Server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
