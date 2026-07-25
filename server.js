@@ -24,7 +24,7 @@ app.post("/chat", async (req, res) => {
     const { message } = req.body;
 
     const response = await client.chat.completions.create({
-      model: "openai/gpt-oss-20b:free",
+      model: "google/gemma-3-12b-it:free",
       messages: [
         {
           role: "system",
